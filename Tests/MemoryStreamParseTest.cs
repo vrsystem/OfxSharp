@@ -1,7 +1,8 @@
-﻿using System.IO;
-using System.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using OfxSharpLib;
+using System.IO;
+using System.Linq;
 
 namespace OFXSharp.Tests
 {
@@ -16,7 +17,7 @@ namespace OFXSharp.Tests
             var stream = new MemoryStream(bytes);
 
             var ofxDocument = parser.Import(stream);
-            Assert.AreEqual(3, ofxDocument.Transactions.Count());
+            ClassicAssert.AreEqual(3, ofxDocument.Transactions.Count());
         }
     }
 }

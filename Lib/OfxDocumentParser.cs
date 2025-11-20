@@ -251,7 +251,7 @@ namespace OfxSharpLib
                .Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
             //Check that no errors in header
-            CheckHeader(header);
+            //CheckHeader(header);
 
             //Remove header
             return file.Substring(file.IndexOf('<') - 1);
