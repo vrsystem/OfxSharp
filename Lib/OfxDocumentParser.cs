@@ -105,13 +105,11 @@ namespace OfxSharpLib
             //If balance info present, populate balance object
             // ***** OFX files from my bank don't have the 'avaliableNode' node, so i manage a 'null' situation
             if (ledgerNode != null) // && avaliableNode != null
-            {
                 ofx.Balance = new Balance(ledgerNode, avaliableNode);
-            }
-            else
-            {
-                throw new OfxParseException("Balance information not found");
-            }
+            //else
+            //{
+            //    throw new OfxParseException("Balance information not found");
+            //}
 
             return ofx;
         }
@@ -205,7 +203,7 @@ namespace OfxSharpLib
         /// <returns></returns>
         private bool IsXmlVersion(string file)
         {
-            return (file.IndexOf("OFXHEADER:100", StringComparison.Ordinal) == -1);
+            return (file.IndexOf("OFXHEADER:", StringComparison.Ordinal) == -1);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace OFXSharp.Tests
         public void CanParseItau()
         {
             var parser = new OfxDocumentParser();
-            var ofxDocument = parser.Import(new FileStream(@"itau.ofx", FileMode.Open));
+            var ofxDocument = parser.Import(new FileStream(@"itau.ofx", FileMode.Open), Encoding.GetEncoding("UTF-8"));
 
             ClassicAssert.AreEqual(ofxDocument.Account.AccountId, "9999 99999-9");
             ClassicAssert.AreEqual(ofxDocument.Account.BankId, "0341");
@@ -35,7 +35,7 @@ namespace OFXSharp.Tests
         public void CanParseBancoDoBrasil()
         {
             var parser = new OfxDocumentParser();
-            var ofxDocument = parser.Import(new FileStream(@"bb.ofx", FileMode.Open), Encoding.GetEncoding("ISO-8859-1"));
+            var ofxDocument = parser.Import(new FileStream(@"bb.ofx", FileMode.Open), Encoding.GetEncoding("UTF-8"));
 
             ClassicAssert.AreEqual(ofxDocument.Account.AccountId, "99999-9");
             ClassicAssert.AreEqual(ofxDocument.Account.BranchId, "9999-9");
@@ -59,6 +59,22 @@ namespace OFXSharp.Tests
 
             ClassicAssert.AreEqual(12, ofxDocument.Transactions.Count());
             CollectionAssert.AreEqual(ofxDocument.Transactions.Select(x => x.Memo.Trim()).FirstOrDefault(), "Depósito Recebido por Boleto");
+
+            ClassicAssert.IsNotNull(ofxDocument);
+        }
+
+        [Test]
+        public void CanParseC6()
+        {
+            var parser = new OfxDocumentParser();
+            var ofxDocument = parser.Import(new FileStream(@"c6.ofx", FileMode.Open), Encoding.GetEncoding("UTF-8"));
+
+            ClassicAssert.AreEqual(ofxDocument.Account.AccountId, "67964184");
+            ClassicAssert.AreEqual(ofxDocument.Account.BranchId, "");
+            ClassicAssert.AreEqual(ofxDocument.Account.BankId, "336");
+
+            ClassicAssert.AreEqual(347, ofxDocument.Transactions.Count());
+            CollectionAssert.AreEqual(ofxDocument.Transactions.Select(x => x.Memo.Trim()).FirstOrDefault(), "Pix recebido de JOAO MARCELO DIAS MACHADO");
 
             ClassicAssert.IsNotNull(ofxDocument);
         }
